@@ -58,3 +58,8 @@ kubectl get pods -n lesson-1
 kubectl get services -n lesson-1
 ```
 8. Copy URL from `get services` command and check it on browser
+
+### Delete cluster after tests
+```shell
+eksctl delete cluster -f simple-cluster.yaml
+```
