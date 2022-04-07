@@ -1,4 +1,4 @@
-###Requirements: 
+### Requirements: 
 - kubectl (ver ~> 1.23)
 - eksctl (ver ~> 0.91.0)
 - docker (ver ~> 20.10.14)
@@ -6,7 +6,7 @@
 - aws-iam-authenticator (ver ~> 0.5.0)
 - AWS IAM user with necessary permissions
 
-###Get started: 
+### Get started: 
 
 In my case, I used a ready-made nginx container from **menfhed** user, 
 which displays Hostname instead of the default of the nginx page.
