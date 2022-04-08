@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: lesson-1
+  namespace        : lesson-1
   creationTimestamp: null
   labels:
     app: nginx-webapp
@@ -16,15 +16,48 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: nginx-webapp
+        app      : nginx-webapp
+        container: nginx-custom
     spec:
       containers:
-        - image: 950313701701.dkr.ecr.us-east-1.amazonaws.com/lesson-1:0.1
-          name: webapp
+        - image          : 950313701701.dkr.ecr.us-east-1.amazonaws.com/lesson-1-nginx:2022.4.01
+          name           : nginx-container
           imagePullPolicy: Always
-          resources: {}
+          resources      : {}
           ports:
             - containerPort: 80
+status: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: lesson-1
+  creationTimestamp: null
+  labels:
+    app: tomcat-webapp
+  name: tomcat-webapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tomcat-webapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app      : tomcat-webapp          # Service will look for those PODS Labels
+        container: tomcat-custom
+    spec:
+      containers:
+        - image          : 950313701701.dkr.ecr.us-east-1.amazonaws.com/lesson-1-tomcat:2022.4.01
+          name           : tomcat-container
+          imagePullPolicy: Always
+          resources      : {}
+          ports:
+            - containerPort: 8080
 status: {}
 
 ---
@@ -33,13 +66,36 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: lesson-1
-  name: nginx-webapp
+  name     : tomcat-webapp
+  labels:
+    run: tomcat-webapp              # Select PODS with those Labels
+spec:
+  ports:
+    - name      : tomcat-listener
+      protocol  : TCP
+      port      : 80                # Port on Load Balancer
+      targetPort: 8080              # Port on POD
+  selector:
+    app      : tomcat-webapp
+    container: tomcat-custom
+  type: LoadBalancer
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: lesson-1
+  name     : nginx-webapp
   labels:
     run: nginx-webapp
 spec:
   ports:
-    - port: 80
-      protocol: TCP
+    - name      : nginx-listener
+      protocol  : TCP
+      port      : 80
+      targetPort: 80
   selector:
-    app: nginx-webapp
+    app      : nginx-webapp
+    container: nginx-custom
   type: LoadBalancer

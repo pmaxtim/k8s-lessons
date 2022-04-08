@@ -9,23 +9,26 @@
 ### Get started: 
 
 In my case, I used a ready-made nginx container from **menfhed** user, 
-which displays Hostname instead of the default of the nginx page.
+which displays Hostname instead of the default of the nginx page. Plus I did prepare a custom 
+tomcat container with displays almost the same as nginx.
 1. Export your AWS_PROFILE
 2. Pull necessary image locally:
 ```shell
 docker pull menfhed/nginx:v3
+docker pull maxtimoshchenko/tomcat:2022.4.01
 docker images
 ```
-2. Create an AWS ECR repository (I did it manually). In my case it's called "lesson-1".
+2. Create an AWS ECR repositories (I did it manually). In my case they are called "lesson-1-nginx" nd "lesson-1-tomcat"".
 Do not close a page after repository creation, the URL uses for the next steps.
 3. Create tags of necessary image for AWS ECR and push it to ECR:
 ```shell
 # find inage_id
 docker images
-# REPOSITORY        TAG       IMAGE ID       CREATED      SIZE
-# menfhed/nginx     v3        fa5aca40cc63   2 days ago   108MB
+# REPOSITORY              TAG         IMAGE ID       CREATED          SIZE
+# menfhed/nginx           v3          fa5aca40cc63   2 days ago       108MB
+# maxtimoshchenko/tomcat  2022.4.01   b27f47994fe5   6 minutes ago    694MB
 
-# ECR login
+# ECR login. repeat for both repo
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin {ECR_URL}
 
 # set tags. tag=0.1
@@ -57,7 +60,8 @@ kubectl apply -f deployment.yaml
 kubectl get pods -n lesson-1
 kubectl get services -n lesson-1
 ```
-8. Copy URL from `get services` command and check it on browser
+8. Copy URL from `get services` command and check it on browser. For tomcat URL you 
+need to add `/hello` or `/hello/sayhello` or `/hello/sayhi`
 
 ### Delete cluster after tests
 ```shell
