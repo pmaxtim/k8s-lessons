@@ -54,7 +54,8 @@ kubectl create namespace lesson-1
 ```
 7. Create deployment and service from file:
 ```shell
-kubectl apply -f deployment.yaml 
+kubectl apply -f nginx-nginx-deployment.yaml 
+kubectl apply -f tomcat-nginx-deployment.yaml 
 
 # validate it
 kubectl get pods -n lesson-1

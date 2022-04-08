@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace        : lesson-1
+  creationTimestamp: null
+  labels:
+    app: nginx-webapp
+  name: nginx-webapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-webapp
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app      : nginx-webapp
+        container: nginx-custom
+    spec:
+      containers:
+        - image          : 950313701701.dkr.ecr.us-east-1.amazonaws.com/lesson-1-nginx:2022.4.01
+          name           : nginx-container
+          imagePullPolicy: Always
+          resources      : {}
+          ports:
+            - containerPort: 80
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: lesson-1
+  name     : nginx-webapp
+  labels:
+    run: nginx-webapp
+spec:
+  ports:
+    - name      : nginx-listener
+      protocol  : TCP
+      port      : 80
+      targetPort: 80
+  selector:
+    app      : nginx-webapp
+    container: nginx-custom
+  type: LoadBalancer
