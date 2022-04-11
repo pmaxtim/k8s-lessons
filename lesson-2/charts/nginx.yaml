@@ -1,0 +1,11 @@
+namespace: lesson-2
+container:
+  image: 950313701701.dkr.ecr.us-east-1.amazonaws.com/lesson-1-nginx:2022.4.01
+  containerPort: 80
+  replicaCount: 3
+
+service:
+  loadBalancerPort: 80
+  targetPort: 80
+  protocol: TCP
+  type: LoadBalancer

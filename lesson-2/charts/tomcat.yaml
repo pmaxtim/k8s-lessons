@@ -1,0 +1,12 @@
+namespace: lesson-2
+container:
+#  image: 950313701701.dkr.ecr.us-east-1.amazonaws.com/lesson-1-tomcat:2022.4.01
+  image: tomcat:latest
+  containerPort: 8080
+  replicaCount: 2
+
+service:
+  loadBalancerPort: 80
+  targetPort: 8080
+  protocol: TCP
+  type: LoadBalancer
