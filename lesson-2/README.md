@@ -2,15 +2,19 @@ helm
 
 ### How to create k8s resources with Helm: 
 1. Follow Lesson-1 Readme to create necessary Docker images and cluster
-2. To create nginx resources run command from lesson-2 directory
+2. Create a "lesson-2" k8s namespace
+```shell
+kubectl create namespace lesson-2
+```
+3. To create nginx resources run command from lesson-2 directory
 ```shell
 helm install mt-nginx charts/simple-chart/ -f charts/nginx.yaml -n lesson-2
 ```
-3. To create tomcat resources run command from lesson-2 directory
+4. To create tomcat resources run command from lesson-2 directory
 ```shell
 helm install mt-tomcat charts/simple-chart/ -f charts/tomcat.yaml -n lesson-2
 ```
-4. Validate that you were created all necessary resources:
+5. Validate that you were created all necessary resources:
 ```shell
  helm ls -n lesson-2
 #NAME     	NAMESPACE	REVISION	UPDATED                                	STATUS  	CHART    	APP VERSION
