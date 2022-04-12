@@ -1,0 +1,15 @@
+namespace: lesson-3
+domain:
+  name: cat.m-tim.click
+  path: /
+
+container:
+  image        : 950313701701.dkr.ecr.us-east-1.amazonaws.com/lesson-1-tomcat
+  tag          : 2022.4.01
+  containerPort: 8080
+  replicaCount : 2
+
+service:
+  port      : 80
+  targetPort: 8080
+  protocol  : TCP

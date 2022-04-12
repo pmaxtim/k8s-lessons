@@ -9,8 +9,7 @@ spec:
   ports:
     - name      : {{ .Release.Name }}-listener
       protocol  : {{ .Values.service.protocol }}
-      port      : {{ .Values.service.loadBalancerPort }}
+      port      : {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}
   selector:
     app: {{ .Release.Name }}-deployment
-  type: {{ .Values.service.type }}

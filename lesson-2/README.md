@@ -8,11 +8,11 @@ kubectl create namespace lesson-2
 ```
 3. To create nginx resources run command from lesson-2 directory
 ```shell
-helm install mt-nginx charts/simple-chart/ -f charts/nginx.yaml -n lesson-2
+helm install mt-nginx charts/simple-chart/ -f charts/values.yaml -n lesson-2
 ```
 4. To create tomcat resources run command from lesson-2 directory
 ```shell
-helm install mt-tomcat charts/simple-chart/ -f charts/tomcat.yaml -n lesson-2
+helm install mt-tomcat charts/simple-chart/ -f charts/values.yaml -n lesson-2
 ```
 5. Validate that you were created all necessary resources:
 ```shell
