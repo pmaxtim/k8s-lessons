@@ -451,12 +451,7 @@ controller:
     ##
     appProtocol: true
 
-    annotations: {
-      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-1:950313701701:certificate/bb8df1c6-7271-410e-b91f-06c969fc68f4,
-      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http",
-      service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https",
-      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '3600'
-    }
+    annotations: {}
     labels: {}
     # clusterIP: ""
 
@@ -504,7 +499,7 @@ controller:
       http: http
       https: https
 
-    type: LoadBalancer
+    type: NodePort
 
     ## type: NodePort
     ## nodePorts:
