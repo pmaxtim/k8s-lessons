@@ -16,15 +16,15 @@ eksctl create cluster -f cluster/cluster.yaml
 ```shell
 kubectl create namespace lesson-3
 ```
-3. Create nginx-ingress-controller. Run command from lesson-3 directory
+4. Create nginx-ingress-controller. Run command from lesson-3 directory
 ```shell
 helm install ingress-nginx charts/ingress-nginx/
 ```
-4. Create nginx resources. Run command from lesson-3 directory
+5. Create nginx resources. Run command from lesson-3 directory
 ```shell
 helm install nginx charts/nginx/ -n lesson-3
 ```
-5. Create tomcat resources. Run command from lesson-3 directory
+6. Create tomcat resources. Run command from lesson-3 directory
 ```shell
 helm install tomcat charts/tomcat/ -n lesson-3
 ```
