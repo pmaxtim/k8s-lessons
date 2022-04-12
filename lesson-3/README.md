@@ -7,8 +7,12 @@
 ![Scheme](../assets/lesson-3.jpg)
 ---
 ### How to create k8s resources with Helm:
-1. Follow Lesson-1 Readme to create necessary Docker images and cluster
-2. Create a "lesson-3" k8s namespace
+1. Follow Lesson-1 Readme to create necessary Docker images and push it to ECR
+2. Create a EKS cluster. Run from lesson-3 dir
+```shell
+eksctl create cluster -f cluster/cluster.yaml
+```
+3. Create a "lesson-3" k8s namespace
 ```shell
 kubectl create namespace lesson-3
 ```
@@ -28,6 +32,7 @@ helm install tomcat charts/tomcat/ -n lesson-3
 ---
 
 ### Delete cluster after tests
+Run from lesson-3 dir
 ```shell
-eksctl delete cluster -f simple-cluster.yaml
+eksctl delete cluster -f -f cluster/cluster.yaml
 ```
