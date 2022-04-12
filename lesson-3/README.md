@@ -34,5 +34,5 @@ helm install tomcat charts/tomcat/ -n lesson-3
 ### Delete cluster after tests
 Run from lesson-3 dir
 ```shell
-eksctl delete cluster -f -f cluster/cluster.yaml
+eksctl delete cluster -f cluster/cluster.yaml
 ```
