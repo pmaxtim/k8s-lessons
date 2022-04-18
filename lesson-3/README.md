@@ -29,6 +29,11 @@ helm install nginx charts/nginx/ -n lesson-3
 helm install tomcat charts/tomcat/ -n lesson-3
 ```
 
+Aaaaand ssl doesn't work for this case. I tested how it works on simple ALB service
+without ingress/ingress controller - it's fine. you can try to: 
+```shell
+helm install nginx charts/nginx-custom -n lesson-3
+```
 ---
 
 ### Delete cluster after tests

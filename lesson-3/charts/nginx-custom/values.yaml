@@ -1,7 +1,4 @@
 namespace: lesson-3
-domain:
-  name: nginx.m-tim.click
-  path: /
 
 container:
   image        : 950313701701.dkr.ecr.us-east-1.amazonaws.com/lesson-1-nginx
@@ -10,6 +7,6 @@ container:
   replicaCount : 1
 
 service:
-  port      : 80
+  port      : 443
   targetPort: 80
   protocol  : TCP

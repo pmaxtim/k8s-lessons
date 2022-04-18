@@ -3,13 +3,14 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: training-cluster
+  name: training
   region: us-east-1
 
 nodeGroups:
-  - name: NG-1
+  - name: ng-1
     instanceType: t3.small
     desiredCapacity: 1
+    availabilityZones: ["eu-east-1a", "eu-east-1b"]
 
 cloudWatch:
   clusterLogging:

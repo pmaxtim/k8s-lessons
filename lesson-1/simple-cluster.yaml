@@ -10,6 +10,7 @@ nodeGroups:
   - name: ng-1
     instanceType: t3.small
     desiredCapacity: 1
+availabilityZones: ['us-east-1a', 'us-east-1b']
 
 cloudWatch:
   clusterLogging:
