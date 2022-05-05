@@ -1,0 +1,17 @@
+secretStore:
+  name: secretstore
+  service: SecretsManager
+  region: us-east-1
+  serviceAccountRef:
+    name: sa-allow-get-secrets
+
+externalSecrets:
+  name: external-secret
+  refreshInterval: 60m
+  target: nginx-external-dns
+
+  data:
+    secretKey: nginx-external-dns
+    remoteRef:
+      key: k8s-lessons/lesson-5
+      property: nginx-external-dns

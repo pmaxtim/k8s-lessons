@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  creationTimestamp: null
+  labels:
+    app: {{ .Release.Name }}-deployment
+  name: {{ .Release.Name }}-deployment
+spec:
+  replicas: {{ .Values.container.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ .Release.Name }}-deployment
+    spec:
+      containers:
+        - image          : {{ .Values.container.image }}:{{ .Values.container.tag }}
+          name           : {{ .Release.Name }}-container
+          imagePullPolicy: IfNotPresent
+          resources      : {}
+          ports:
+            - name: http
+              containerPort: {{ .Values.container.port }}
+status: {}
