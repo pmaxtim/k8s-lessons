@@ -1,8 +1,11 @@
 ### Goals:
-- [x] to-do
+- [x] IAM policies and roles should be created from terminal
+- [x] SSL
+- [x] Each helm should create ServiceAccount
+- [ ] Hostname for Route53 should be got from AWS Secrets Manager 
 ---
 ### Scheme:
-![Scheme](../assets/lesson-4.jpg)
+![Scheme](../assets/lesson-5.jpg)
 
 ---
 ### How to :
@@ -12,16 +15,19 @@ Run command from **lesson-5** dir
 export AWS_PROFILE=XXXXX
 eksctl create cluster -f cluster.yaml
 
+export CLUSTER_NAME=enter-name-of-cluster
+export AWS_REGION=us-east-1
+
 # create OIDC provider
 eksctl utils associate-iam-oidc-provider \
-  --region {AWS_REGION} \
-  --cluster {CLUSTERNAME} \
+  --region $AWS_REGION \
+  --cluster $CLUSTER_NAME \
   --approve
 
 # find OIDC ID. We will need it for the next actions
 aws eks describe-cluster \
-  --region {AWS_REGION} \
-  --name {CLUSTERNAME} \
+  --region $AWS_REGION \
+  --name $CLUSTER_NAME \
   --query "cluster.identity.oidc.issuer" \
   --output text 
 ```
@@ -94,10 +100,9 @@ helm install external-dns charts/external-dns
 ```
 8. Create external-secrets and apply SecretStore+ExternalSecret
 ```shell
-helm install external-secrets charts/external-secrets
-
-kubectl apply -f secret-store.yaml
-kubectl apply -f external-secrets.yaml
+helm install external-secrets charts/external-secrets --debug
+# wait about few minutes
+helm install secret-store charts/secret-store --debug
 ```
 9. Add annotation for LoadBalancer service and install nginx deployment from helm chart:
 ```shell
