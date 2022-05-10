@@ -1,3 +1,5 @@
+{{- $secret_name  := .Values.container.envSecrets.name -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,6 +22,16 @@ spec:
     spec:
       containers:
         - image          : {{ .Values.container.image }}:{{ .Values.container.tag }}
+
+          env:
+          {{- range .Values.container.envSecrets.key}}
+            - name: {{ . | upper }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $secret_name }}
+                  key: {{ . }}
+        {{- end }}
+
           name           : {{ .Release.Name }}-container
           imagePullPolicy: IfNotPresent
           resources      : {}

@@ -2,9 +2,15 @@ namespace: lesson-5
 
 container:
   image        : 950313701701.dkr.ecr.us-east-1.amazonaws.com/lesson-1-nginx
-  tag          : 2022.05.01
+  tag          : 2022.05.02
   port         : 80
-  replicaCount : 3
+  replicaCount : 1
+  envSecrets:
+    name: nginx-secrets
+    key:
+      - nginx_external_dns
+      - nginx_password
+      - nginx_username
 
 service:
   port      : 443
