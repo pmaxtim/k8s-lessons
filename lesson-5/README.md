@@ -81,7 +81,9 @@ aws iam attach-role-policy \
 
 5. Create necessary secrets:
 - Name: **k8s-lessons/lesson-5**
-  - Key: nginx-external-dns. Value: necessary-dns-name
+  - Key: **nginx-external-dns**. Value: necessary-dns-name
+  - Key: **nginx-username**. Value: necessary-username
+  - Key: **nginx-password**. Value: necessary-password
 
 6. Register a DNS name and request a SSL certificate (do not forget validate it and copy arn)
 
@@ -120,7 +122,7 @@ kubectl create namespace lesson-5
 helm install nginx charts/nginx
 ```
 ### Delete cluster after tests
-Run from lesson-1 dir
+Run from lesson-5 dir
 ```shell
 helm delete nginx external-dns
 eksctl delete cluster -f simple-cluster.yaml
