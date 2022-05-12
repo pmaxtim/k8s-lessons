@@ -125,6 +125,27 @@ helm install nginx charts/nginx
 ### Delete cluster after tests
 Run from lesson-5 dir
 ```shell
-helm delete nginx external-dns
-eksctl delete cluster -f simple-cluster.yaml
+#delete helm resources
+helm delete cluster-secret-store external-dns external-secrets nginx
+
+#delete roles and policyes
+AWS_ACCOUNT_ID=123456789012
+POLICY_NAME=AllowExternalDNSUpdate
+ROLE_NAME=AllowExternalDNSUpdate
+aws iam detach-role-policy \
+  --role-name $ROLE_NAME \
+  --policy-arn arn:aws:iam::$AWS_ACCOUNT_ID:policy/$POLICY_NAME
+aws iam delete-role --role-name $ROLE_NAME
+aws iam delete-policy --policy-arn arn:aws:iam::$AWS_ACCOUNT_ID:policy/$POLICY_NAME
+
+POLICY_NAME=AllowGetSecrets
+ROLE_NAME=AllowGetSecrets
+aws iam detach-role-policy \
+  --role-name $ROLE_NAME \
+  --policy-arn arn:aws:iam::$AWS_ACCOUNT_ID:policy/$POLICY_NAME
+aws iam delete-role --role-name $ROLE_NAME
+aws iam delete-policy --policy-arn arn:aws:iam::$AWS_ACCOUNT_ID:policy/$POLICY_NAME
+
+#terminate EKS cluster
+eksctl delete cluster -f cluster.yaml
 ```
