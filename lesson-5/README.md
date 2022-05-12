@@ -1,8 +1,9 @@
 ### Goals:
 - [x] IAM policies and roles should be created from terminal
 - [x] SSL
-- [x] Each helm should create ServiceAccount
-- [ ] Hostname for Route53 should be got from AWS Secrets Manager 
+- [x] External DNS
+- [x] ServiceAccounts for ExternalDNS and ExternalSecrets
+- [x] Nginx page should show 3 secrets from AWS Secrets manager
 ---
 ### Scheme:
 ![Scheme](../assets/lesson-5.jpg)
@@ -104,7 +105,8 @@ helm install external-dns charts/external-dns
 ```shell
 helm install external-secrets charts/external-secrets --debug
 # wait about few minutes
-helm install secret-store charts/secret-store --debug
+kubectl create namespace lesson-5
+helm install cluster-secret-store charts/cluster-secret-store --debug
 ```
 9. Add annotation for LoadBalancer service and install nginx deployment from helm chart:
 ```shell
@@ -118,7 +120,6 @@ service:
   dnsName   : {YOUR_FULL_DNS_NAME}
 
 # terminal
-kubectl create namespace lesson-5
 helm install nginx charts/nginx
 ```
 ### Delete cluster after tests
