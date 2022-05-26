@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: istio-gateway-nginx
+  name: istio-gateway
   namespace: lesson-6
 spec:
   selector:

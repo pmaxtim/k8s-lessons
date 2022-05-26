@@ -7,7 +7,7 @@ spec:
   hosts:
     - "nginx.m-tim.click"
   gateways:
-    - istio-gateway-nginx
+    - istio-gateway
   http:
     - match:
         - uri:
@@ -15,5 +15,26 @@ spec:
       route:
         - destination:
             host: nginx-service
+            port:
+              number: 80
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: istio-virtualservice-tomcat
+  namespace: lesson-6
+spec:
+  hosts:
+    - "tomcat.m-tim.click"
+  gateways:
+    - istio-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: tomcat-service
             port:
               number: 80

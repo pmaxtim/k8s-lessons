@@ -1,5 +1,6 @@
 ### Goals:
-- [] Replace ALB to Istio Ingress
+- [x] Replace CLB for each web to Istio Ingress
+
 ---
 ### Scheme:
 ![Scheme](../assets/lesson-6.jpg)
@@ -130,9 +131,10 @@ kubectl create namespace lesson-6
 helm install cluster-secret-store charts/cluster-secret-store --debug
 ```
 
-11. Add annotation for LoadBalancer service and install nginx deployment from helm chart:
+11. Install nginx and tomcat deployments from helm charts:
 ```shell
 helm install nginx charts/nginx --debug
+helm install tomcat charts/tomcat --debug
 ```
 
 12. Create gateway and virtualservice resources. Should be created in the same namespace as
@@ -151,25 +153,29 @@ kubectl apply -f istio-parts/virtualservice.yaml
 Run from lesson-6 dir
 ```shell
 #delete helm resources
-helm delete cluster-secret-store external-dns external-secrets nginx
+helm delete cluster-secret-store external-dns external-secrets nginx tomcat
 
 #delete roles and policyes
-AWS_ACCOUNT_ID=123456789012
-POLICY_NAME=AllowExternalDNSUpdate
-ROLE_NAME=AllowExternalDNSUpdate
+export AWS_ACCOUNT_ID=123456789012
+export POLICY_NAME=AllowExternalDNSUpdate
+export ROLE_NAME=AllowExternalDNSUpdate
+
 aws iam detach-role-policy \
   --role-name $ROLE_NAME \
   --policy-arn arn:aws:iam::$AWS_ACCOUNT_ID:policy/$POLICY_NAME
 aws iam delete-role --role-name $ROLE_NAME
 aws iam delete-policy --policy-arn arn:aws:iam::$AWS_ACCOUNT_ID:policy/$POLICY_NAME
 
-POLICY_NAME=AllowGetSecrets
-ROLE_NAME=AllowGetSecrets
+export POLICY_NAME=AllowGetSecrets
+export ROLE_NAME=AllowGetSecrets
 aws iam detach-role-policy \
   --role-name $ROLE_NAME \
   --policy-arn arn:aws:iam::$AWS_ACCOUNT_ID:policy/$POLICY_NAME
 aws iam delete-role --role-name $ROLE_NAME
 aws iam delete-policy --policy-arn arn:aws:iam::$AWS_ACCOUNT_ID:policy/$POLICY_NAME
+
+# delete istio
+istioctl experimental uninstall --purge -y
 
 #terminate EKS cluster
 eksctl delete cluster -f cluster.yaml
