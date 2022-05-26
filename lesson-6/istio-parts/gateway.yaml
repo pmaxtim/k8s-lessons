@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: istio-gateway-nginx
+  namespace: lesson-6
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+      tls:
+        httpsRedirect: true # sends 301 redirect for http requests
+    - port:
+        number: 443
+        name: https-443
+        protocol: HTTP
+      hosts:
+        - "*"

@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: istio-virtualservice-nginx
+  namespace: lesson-6
+spec:
+  hosts:
+    - "nginx.m-tim.click"
+  gateways:
+    - istio-gateway-nginx
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: nginx-service
+            port:
+              number: 80

@@ -1,0 +1,17 @@
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: may26
+  region: us-east-1
+
+nodeGroups:
+  - name: ng-1
+    instanceType: t3.2xlarge
+    desiredCapacity: 1
+availabilityZones: ['us-east-1a', 'us-east-1b']
+
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["audit"]

@@ -7,6 +7,7 @@ metadata:
   creationTimestamp: null
   labels:
     app: {{ .Release.Name }}-deployment
+    version: {{ .Values.container.version }}
   name: {{ .Release.Name }}-deployment
 spec:
   replicas: {{ .Values.container.replicaCount }}
@@ -19,9 +20,10 @@ spec:
       creationTimestamp: null
       labels:
         app: {{ .Release.Name }}-deployment
+        version: {{ .Values.container.version }}
     spec:
       containers:
-        - image: {{ .Values.container.image }}:{{ .Values.container.tag }}
+        - image          : {{ .Values.container.image }}:{{ .Values.container.tag }}
 
           env:
           {{- range .Values.container.envSecrets.key}}
@@ -30,7 +32,8 @@ spec:
                 secretKeyRef:
                   name: {{ $secret_name }}
                   key: {{ . }}
-          {{- end }}
+                  optional: true
+        {{- end }}
 
           name           : {{ .Release.Name }}-container
           imagePullPolicy: IfNotPresent
