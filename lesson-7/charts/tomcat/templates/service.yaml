@@ -5,6 +5,10 @@ metadata:
   name     : {{ .Release.Name }}-service
   labels:
     run: {{ .Release.Name }}-deployment
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ports:
     - name      : tomcat-listener
@@ -13,3 +17,4 @@ spec:
       targetPort: {{ .Values.service.targetPort }}
   selector:
     app: {{ .Release.Name }}-deployment
+  type: LoadBalancer
