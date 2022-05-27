@@ -32,7 +32,7 @@ spec:
                 secretKeyRef:
                   name: {{ $secret_name }}
                   key: {{ . }}
-                  optional: true
+                  optional: false
         {{- end }}
 
           name           : {{ .Release.Name }}-container
