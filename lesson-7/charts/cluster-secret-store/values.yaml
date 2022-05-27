@@ -1,0 +1,21 @@
+namespace: lesson-7
+
+secretStore:
+  name: secretstore
+  service: SecretsManager
+  region: us-east-1
+  serviceAccountRef:
+    name: sa-allow-get-secrets
+    namespace: default
+
+externalSecrets:
+  name: external-secret
+  refreshInterval: 60m
+  target: nginx-secrets
+  data:
+    remoteRef:
+      key: k8s-lessons/lesson-5
+      secrets:
+        - nginx_external_dns
+        - nginx_username
+        - nginx_password

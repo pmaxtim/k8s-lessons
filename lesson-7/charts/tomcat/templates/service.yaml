@@ -7,7 +7,7 @@ metadata:
     run: {{ .Release.Name }}-deployment
 spec:
   ports:
-    - name      : {{ .Release.Name }}-listener
+    - name      : tomcat-listener
       protocol  : {{ .Values.service.protocol }}
       port      : {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}

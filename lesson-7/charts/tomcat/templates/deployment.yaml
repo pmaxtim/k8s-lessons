@@ -26,6 +26,6 @@ spec:
           imagePullPolicy: Always
           resources      : {}
           ports:
-            - name: {{ .Release.Name }}-listener
+            - name: tomcat-listener
               containerPort: {{ .Values.container.port }}
 status: {}
