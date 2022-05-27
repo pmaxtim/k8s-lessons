@@ -1,0 +1,44 @@
+{{- $secret_name  := .Values.container.envSecrets.name -}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  creationTimestamp: null
+  labels:
+    app: {{ .Release.Name }}-deployment
+    version: {{ .Values.container.version }}
+  name: {{ .Release.Name }}-deployment
+spec:
+  replicas: {{ .Values.container.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ .Release.Name }}-deployment
+        version: {{ .Values.container.version }}
+    spec:
+      containers:
+        - image          : {{ .Values.container.image }}:{{ .Values.container.tag }}
+
+          env:
+          {{- range .Values.container.envSecrets.key}}
+            - name: {{ . | upper }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $secret_name }}
+                  key: {{ . }}
+                  optional: true
+        {{- end }}
+
+          name           : {{ .Release.Name }}-container
+          imagePullPolicy: IfNotPresent
+          resources      : {}
+          ports:
+            - name: http
+              containerPort: {{ .Values.container.port }}
+status: {}

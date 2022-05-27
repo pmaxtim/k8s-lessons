@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mtim-lesson-7
+spec:
+  destination:
+    name: ''
+    namespace: default
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: lesson-7
+    repoURL: 'https://github.com/imprivata-mtimoshchenko/k8s-lessons.git'
+    targetRevision: HEAD
+  project: personal
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
