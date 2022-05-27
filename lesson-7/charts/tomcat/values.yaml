@@ -1,4 +1,4 @@
-namespace: lesson-6
+namespace: lesson-7
 
 container:
   image        : 950313701701.dkr.ecr.us-east-1.amazonaws.com/lesson-1-tomcat
