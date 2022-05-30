@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "external-secrets.yaml.fullname" . }}-metrics
+  name: {{ include "external-secrets.fullname" . }}-metrics
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    {{- include "external-secrets.yaml.selectorLabels" . | nindent 4 }}
+    {{- include "external-secrets.selectorLabels" . | nindent 4 }}
 spec:
   type: ClusterIP
   ports:
@@ -13,22 +13,22 @@ spec:
       protocol: TCP
       name: metrics
   selector:
-    {{- include "external-secrets.yaml.selectorLabels" . | nindent 4 }}
+    {{- include "external-secrets.selectorLabels" . | nindent 4 }}
 ---
 apiVersion: "monitoring.coreos.com/v1"
 kind: ServiceMonitor
 metadata:
   labels:
-    {{- include "external-secrets.yaml.labels" . | nindent 4 }}
+    {{- include "external-secrets.labels" . | nindent 4 }}
 {{- if .Values.serviceMonitor.additionalLabels }}
 {{ toYaml .Values.serviceMonitor.additionalLabels | indent 4 }}
 {{- end }}
-  name: {{ include "external-secrets.yaml.fullname" . }}-metrics
+  name: {{ include "external-secrets.fullname" . }}-metrics
   namespace: {{ .Release.Namespace | quote }}
 spec:
   selector:
     matchLabels:
-      {{- include "external-secrets.yaml.selectorLabels" . | nindent 6 }}
+      {{- include "external-secrets.selectorLabels" . | nindent 6 }}
   namespaceSelector:
     matchNames:
     - {{ .Release.Namespace | quote }}

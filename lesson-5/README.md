@@ -103,10 +103,10 @@ helm install external-dns charts/external-dns
 ```
 8. Create external-secrets and apply SecretStore+ExternalSecret
 ```shell
-helm install external-secrets.yaml charts/external-secrets.yaml --debug
+helm install external-secrets charts/external-secrets --debug
 # wait about few minutes
 kubectl create namespace lesson-5
-helm install cluster-secret-store.yaml charts/cluster-secret-store.yaml --debug
+helm install cluster-secret-store charts/cluster-secret-store --debug
 ```
 9. Add annotation for LoadBalancer service and install nginx deployment from helm chart:
 ```shell
@@ -126,7 +126,7 @@ helm install nginx charts/nginx
 Run from lesson-5 dir
 ```shell
 #delete helm resources
-helm delete cluster-secret-store.yaml external-dns external-secrets.yaml nginx
+helm delete cluster-secret-store external-dns external-secrets nginx
 
 #delete roles and policyes
 AWS_ACCOUNT_ID=123456789012

@@ -10,14 +10,14 @@ External secret management for Kubernetes
 
 ## TL;DR
 ```bash
-helm repo add external-secrets.yaml https://charts.external-secrets.io
-helm install external-secrets.yaml/external-secrets.yaml
+helm repo add external-secrets https://charts.external-secrets.io
+helm install external-secrets/external-secrets
 ```
 
 ## Installing the Chart
 To install the chart with the release name `external-secrets`:
 ```bash
-helm install external-secrets.yaml external-secrets.yaml/external-secrets.yaml
+helm install external-secrets external-secrets/external-secrets
 ```
 
 ### Custom Resources
@@ -26,7 +26,7 @@ By default, the chart will install external-secrets CRDs, this can be controlled
 ## Uninstalling the Chart
 To uninstall the `external-secrets` deployment:
 ```bash
-helm uninstall external-secrets.yaml
+helm uninstall external-secrets
 ```
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 

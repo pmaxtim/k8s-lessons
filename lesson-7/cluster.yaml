@@ -3,7 +3,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: may30
+  name: may27
   region: us-east-1
 
 nodeGroups:

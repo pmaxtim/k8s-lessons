@@ -1,6 +1,6 @@
 apiVersion: v2
 name: web
-description: Chart contains a secret-store + some AWS Secrets Manager external-secrets.yaml
+description: Chart contains a secret-store + some AWS Secrets Manager external-secrets
 
 # A chart can be either an 'application' or a 'library' chart.
 #

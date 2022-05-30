@@ -6,9 +6,9 @@ metadata:
   labels:
     external-secrets.io/component: webhook
 webhooks:
-- name: "validate.secretstore.external-secrets.yaml.io"
+- name: "validate.secretstore.external-secrets.io"
   rules:
-  - apiGroups:   ["external-secrets.yaml.io"]
+  - apiGroups:   ["external-secrets.io"]
     apiVersions: ["v1beta1"]
     operations:  ["CREATE", "UPDATE", "DELETE"]
     resources:   ["secretstores"]
@@ -16,15 +16,15 @@ webhooks:
   clientConfig:
     service:
       namespace: {{ .Release.Namespace | quote }}
-      name: {{ include "external-secrets.yaml.fullname" . }}-webhook
-      path: /validate-external-secrets.yaml-io-v1beta1-secretstore
+      name: {{ include "external-secrets.fullname" . }}-webhook
+      path: /validate-external-secrets-io-v1beta1-secretstore
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
   timeoutSeconds: 5
 
-- name: "validate.clustersecretstore.external-secrets.yaml.io"
+- name: "validate.clustersecretstore.external-secrets.io"
   rules:
-  - apiGroups:   ["external-secrets.yaml.io"]
+  - apiGroups:   ["external-secrets.io"]
     apiVersions: ["v1beta1"]
     operations:  ["CREATE", "UPDATE", "DELETE"]
     resources:   ["clustersecretstores"]
@@ -32,8 +32,8 @@ webhooks:
   clientConfig:
     service:
       namespace: {{ .Release.Namespace | quote }}
-      name: {{ include "external-secrets.yaml.fullname" . }}-webhook
-      path: /validate-external-secrets.yaml-io-v1beta1-clustersecretstore
+      name: {{ include "external-secrets.fullname" . }}-webhook
+      path: /validate-external-secrets-io-v1beta1-clustersecretstore
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
   timeoutSeconds: 5
@@ -45,9 +45,9 @@ metadata:
   labels:
     external-secrets.io/component: webhook
 webhooks:
-- name: "validate.externalsecret.external-secrets.yaml.io"
+- name: "validate.externalsecret.external-secrets.io"
   rules:
-  - apiGroups:   ["external-secrets.yaml.io"]
+  - apiGroups:   ["external-secrets.io"]
     apiVersions: ["v1beta1"]
     operations:  ["CREATE", "UPDATE", "DELETE"]
     resources:   ["externalsecrets"]
@@ -55,8 +55,8 @@ webhooks:
   clientConfig:
     service:
       namespace: {{ .Release.Namespace | quote }}
-      name: {{ include "external-secrets.yaml.fullname" . }}-webhook
-      path: /validate-external-secrets.yaml-io-v1beta1-externalsecret
+      name: {{ include "external-secrets.fullname" . }}-webhook
+      path: /validate-external-secrets-io-v1beta1-externalsecret
   admissionReviewVersions: ["v1", "v1beta1"]
   sideEffects: None
   timeoutSeconds: 5

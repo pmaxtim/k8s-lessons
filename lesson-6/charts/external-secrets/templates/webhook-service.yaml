@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "external-secrets.yaml.fullname" . }}-webhook
+  name: {{ include "external-secrets.fullname" . }}-webhook
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    {{- include "external-secrets.yaml-webhook.labels" . | nindent 4 }}
+    {{- include "external-secrets-webhook.labels" . | nindent 4 }}
     external-secrets.io/component : webhook
   {{- if .Values.webhook.prometheus.enabled}}
   annotations:
@@ -27,5 +27,5 @@ spec:
     name: metrics
   {{- end }}
   selector:
-    {{- include "external-secrets.yaml-webhook.selectorLabels" . | nindent 4 }}
+    {{- include "external-secrets-webhook.selectorLabels" . | nindent 4 }}
 {{- end }}
