@@ -6,15 +6,15 @@ kind: Role
 kind: ClusterRole
 {{- end }}
 metadata:
-  name: {{ include "external-secrets.fullname" . }}-controller
+  name: {{ include "external-secrets.yaml.fullname" . }}-controller
   {{- if and .Values.scopedNamespace .Values.scopedRBAC }}
   namespace: {{ .Values.scopedNamespace | quote }}
   {{- end }}
   labels:
-    {{- include "external-secrets.labels" . | nindent 4 }}
+    {{- include "external-secrets.yaml.labels" . | nindent 4 }}
 rules:
   - apiGroups:
-    - "external-secrets.io"
+    - "external-secrets.yaml.io"
     resources:
     - "secretstores"
     - "clustersecretstores"
@@ -25,7 +25,7 @@ rules:
     - "list"
     - "watch"
   - apiGroups:
-    - "external-secrets.io"
+    - "external-secrets.yaml.io"
     resources:
     - "externalsecrets"
     - "externalsecrets/status"
@@ -85,7 +85,7 @@ rules:
     - "create"
     - "patch"
   - apiGroups:
-    - "external-secrets.io"
+    - "external-secrets.yaml.io"
     resources:
     - "externalsecrets"
     verbs:
@@ -99,18 +99,18 @@ kind: Role
 kind: ClusterRole
 {{- end }}
 metadata:
-  name: {{ include "external-secrets.fullname" . }}-view
+  name: {{ include "external-secrets.yaml.fullname" . }}-view
   {{- if and .Values.scopedNamespace .Values.scopedRBAC }}
   namespace: {{ .Values.scopedNamespace | quote }}
   {{- end }}
   labels:
-    {{- include "external-secrets.labels" . | nindent 4 }}
+    {{- include "external-secrets.yaml.labels" . | nindent 4 }}
     rbac.authorization.k8s.io/aggregate-to-view: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
 rules:
   - apiGroups:
-      - "external-secrets.io"
+      - "external-secrets.yaml.io"
     resources:
       - "externalsecrets"
       - "secretstores"
@@ -127,17 +127,17 @@ kind: Role
 kind: ClusterRole
 {{- end }}
 metadata:
-  name: {{ include "external-secrets.fullname" . }}-edit
+  name: {{ include "external-secrets.yaml.fullname" . }}-edit
   {{- if and .Values.scopedNamespace .Values.scopedRBAC }}
   namespace: {{ .Values.scopedNamespace | quote }}
   {{- end }}
   labels:
-    {{- include "external-secrets.labels" . | nindent 4 }}
+    {{- include "external-secrets.yaml.labels" . | nindent 4 }}
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
 rules:
   - apiGroups:
-      - "external-secrets.io"
+      - "external-secrets.yaml.io"
     resources:
       - "externalsecrets"
       - "secretstores"
@@ -156,12 +156,12 @@ kind: RoleBinding
 kind: ClusterRoleBinding
 {{- end }}
 metadata:
-  name: {{ include "external-secrets.fullname" . }}-controller
+  name: {{ include "external-secrets.yaml.fullname" . }}-controller
   {{- if and .Values.scopedNamespace .Values.scopedRBAC }}
   namespace: {{ .Values.scopedNamespace | quote }}
   {{- end }}
   labels:
-    {{- include "external-secrets.labels" . | nindent 4 }}
+    {{- include "external-secrets.yaml.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   {{- if and .Values.scopedNamespace .Values.scopedRBAC }}
@@ -169,26 +169,26 @@ roleRef:
   {{- else }}
   kind: ClusterRole
   {{- end }}
-  name: {{ include "external-secrets.fullname" . }}-controller
+  name: {{ include "external-secrets.yaml.fullname" . }}-controller
 subjects:
-  - name: {{ include "external-secrets.serviceAccountName" . }}
+  - name: {{ include "external-secrets.yaml.serviceAccountName" . }}
     namespace: {{ .Release.Namespace | quote }}
     kind: ServiceAccount
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ include "external-secrets.fullname" . }}-leaderelection
+  name: {{ include "external-secrets.yaml.fullname" . }}-leaderelection
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    {{- include "external-secrets.labels" . | nindent 4 }}
+    {{- include "external-secrets.yaml.labels" . | nindent 4 }}
 rules:
   - apiGroups:
     - ""
     resources:
     - "configmaps"
     resourceNames:
-    - "external-secrets-controller"
+    - "external-secrets.yaml-controller"
     verbs:
     - "get"
     - "update"
@@ -212,16 +212,16 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ include "external-secrets.fullname" . }}-leaderelection
+  name: {{ include "external-secrets.yaml.fullname" . }}-leaderelection
   namespace: {{ .Release.Namespace | quote }}
   labels:
-    {{- include "external-secrets.labels" . | nindent 4 }}
+    {{- include "external-secrets.yaml.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ include "external-secrets.fullname" . }}-leaderelection
+  name: {{ include "external-secrets.yaml.fullname" . }}-leaderelection
 subjects:
   - kind: ServiceAccount
-    name: {{ include "external-secrets.serviceAccountName" . }}
+    name: {{ include "external-secrets.yaml.serviceAccountName" . }}
     namespace: {{ .Release.Namespace | quote }}
 {{- end }}
