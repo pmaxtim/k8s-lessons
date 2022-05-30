@@ -1,7 +1,7 @@
 ### Goals:
 - [x] Deploy this scheme using ArgoCD
 - [x] Check how it works with manual creation of ArgoCD Applications
-- [ ] Check how creation of ArgoCD Applications works with argoCLI
+- [x] Check how creation of ArgoCD Applications works with argoCLI
 
 ---
 ### Scheme:
