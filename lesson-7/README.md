@@ -1,7 +1,7 @@
 ### Goals:
 - [x] Deploy this scheme using ArgoCD
 - [x] Check how it works with manual creation of ArgoCD Applications
-- [ ] Check how creation of ArgoCD Applications works with argoCLI
+- [ ] Check how creation of ArgoCD Applications works with argoCLI 
 
 ---
 ### Scheme:
@@ -111,10 +111,10 @@ argocd cluster add {CLUSTER_CONTEXT}
 9.  [MANUAL FROM UI] Create an Application in ArgoCD from Git repo
 
 **Pre-settings**
-- Create Repository: ArgoCD UI -> Settings -> Repositories ->
-  Connect repo using SSH -> Enter parameters -> Save as credentials template.
-- Create Project: ArgoCD UI -> Settings -> Projects -> New Project ->
-  Enter parameters -> Create
+- Create Repository: ArgoCD UI -> Settings -> Repositories -> 
+Connect repo using SSH -> Enter parameters -> Save as credentials template. 
+- Create Project: ArgoCD UI -> Settings -> Projects -> New Project -> 
+Enter parameters -> Create
 
 **Example for external-dns**
 

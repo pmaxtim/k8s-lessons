@@ -125,10 +125,10 @@ helm install external-dns charts/external-dns --debug
 
 10. Create external-secrets and apply SecretStore+ExternalSecret
 ```shell
-helm install external-secrets charts/external-secrets --debug
+helm install external-secrets.yaml charts/external-secrets.yaml --debug
 # wait about few minutes
 kubectl create namespace lesson-6
-helm install cluster-secret-store charts/cluster-secret-store --debug
+helm install cluster-secret-store.yaml charts/cluster-secret-store.yaml --debug
 ```
 
 11. Install nginx and tomcat deployments from helm charts:
@@ -153,7 +153,7 @@ kubectl apply -f istio-parts/virtualservice.yaml
 Run from lesson-6 dir
 ```shell
 #delete helm resources
-helm delete cluster-secret-store external-dns external-secrets nginx tomcat
+helm delete cluster-secret-store.yaml external-dns external-secrets.yaml nginx tomcat
 
 #delete roles and policyes
 export AWS_ACCOUNT_ID=123456789012

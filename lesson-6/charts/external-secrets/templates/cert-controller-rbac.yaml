@@ -2,9 +2,9 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "external-secrets.fullname" . }}-cert-controller
+  name: {{ include "external-secrets.yaml.fullname" . }}-cert-controller
   labels:
-    {{- include "external-secrets-cert-controller.labels" . | nindent 4 }}
+    {{- include "external-secrets.yaml-cert-controller.labels" . | nindent 4 }}
 rules:
   - apiGroups:
     - "apiextensions.k8s.io"
@@ -55,15 +55,15 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ include "external-secrets.fullname" . }}-cert-controller
+  name: {{ include "external-secrets.yaml.fullname" . }}-cert-controller
   labels:
-    {{- include "external-secrets-cert-controller.labels" . | nindent 4 }}
+    {{- include "external-secrets.yaml-cert-controller.labels" . | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ include "external-secrets.fullname" . }}-cert-controller
+  name: {{ include "external-secrets.yaml.fullname" . }}-cert-controller
 subjects:
-  - name: {{ include "external-secrets-cert-controller.serviceAccountName" . }}
+  - name: {{ include "external-secrets.yaml-cert-controller.serviceAccountName" . }}
     namespace: {{ .Release.Namespace | quote }}
     kind: ServiceAccount
 {{- end }}
