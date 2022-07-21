@@ -19,11 +19,6 @@ export AWS_REGION=us-east-1
 
 eksctl create cluster -f cluster.yaml
 
-# create OIDC provider
-eksctl utils associate-iam-oidc-provider \
-  --region $AWS_REGION \
-  --cluster $CLUSTER_NAME \
-  --approve
 
 # find OIDC ID. We will need it for the next actions
 aws eks describe-cluster \
@@ -42,18 +37,18 @@ POLICY_NAME=AllowExternalDNSUpdate
 ROLE_NAME=AllowExternalDNSUpdate
 
 aws iam create-policy \
-  --policy-name $POLICY_NAME \
+  --policy-name ${POLICY_NAME} \
   --policy-document file://"dependencies/allow-external-dns-update.json"
 
 POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='${POLICY_NAME}'].Arn" --output text)
 
 aws iam create-role \
-  --role-name $ROLE_NAME \
+  --role-name ${ROLE_NAME} \
   --assume-role-policy-document file://"dependencies/eks-iam-trust-policy.json"  
 
 aws iam attach-role-policy \
-  --policy-arn $POLICY_ARN \
-  --role-name $ROLE_NAME
+  --policy-arn ${POLICY_ARN} \
+  --role-name ${ROLE_NAME}
 ```
 
 
@@ -63,22 +58,22 @@ POLICY_NAME=AllowGetSecrets
 ROLE_NAME=AllowGetSecrets
 
 aws iam create-policy \
-  --policy-name $POLICY_NAME \
+  --policy-name ${POLICY_NAME} \
   --policy-document file://"dependencies/allow-get-secrets.json"
 
 POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='${POLICY_NAME}'].Arn" --output text)
 
 aws iam create-role \
-  --role-name $ROLE_NAME \
+  --role-name ${ROLE_NAME} \
   --assume-role-policy-document file://"dependencies/eks-iam-trust-policy.json"  
 
 aws iam attach-role-policy \
-  --policy-arn $POLICY_ARN \
-  --role-name $ROLE_NAME
+  --policy-arn ${POLICY_ARN} \
+  --role-name ${ROLE_NAME}
 ```
 
 5. Create necessary secrets:
-- Name: **k8s-lessons/lesson-6**
+- Name: **k8s-lessons/lesson-7**
     - Key: **nginx-external-dns**. Value: necessary-dns-name
     - Key: **nginx-username**. Value: necessary-username
     - Key: **nginx-password**. Value: necessary-password
@@ -96,16 +91,20 @@ kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}
 
 # get ArgoCD password. Username us 'admin'
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+````
 
+Create route 53 record for argocd 
+```shell
 # you can login via ArgoCLI 
 argocd login {ARGO_HOSTNAME}
+  # admin/pass
 argocd account update-password
 ```
 
 8. Find your cluster context
 ```shell
 kubectl config get-contexts -o name
-argocd cluster add {CLUSTER_CONTEXT}
+argocd cluster add {CLUSTER_CONTEXT_ARN}
 ```
 
 9.  [MANUAL FROM UI] Create an Application in ArgoCD from Git repo
@@ -141,13 +140,17 @@ Create external-dns application: ArgoCD UI -> New App -> Enter parameters:
 argocd repo add {GITHUB_REPO_SSH_URL} --ssh-private-key-path {PATH_TO_PRIVKEY}
 ```
 - Create project:
+change your project*.yaml file before apply. destination.server should be replaced 
 ```shell
 kubectl apply -f argocd-structure/project/mtim-lesson7.yaml
 ```
 - Create all applications
+change your application*.yaml file before apply. destination.server should be replaced
 ```shell
 kubectl apply -f argocd-structure/application/external-dns.yaml
 kubectl apply -f argocd-structure/application/external-secrets.yaml
+
+# wait for few minutes
 kubectl apply -f argocd-structure/application/cluster-secret-store.yaml
 kubectl apply -f argocd-structure/application/nginx.yaml
 kubectl apply -f argocd-structure/application/tomcat.yaml

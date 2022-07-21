@@ -15,10 +15,12 @@ spec:
   description: test project created from argocd CLI
   sourceRepos:
     - 'git@github.com:imprivata-mtimoshchenko/k8s-lessons.git'
+    - 'https://prometheus-community.github.io/helm-charts'
+    - 'https://grafana.github.io/helm-charts'
   # Only permit applications to deploy to the guestbook namespace in the same cluster
   destinations:
-    - server: https://13ADA01E6286EDD91499DFD7C36443E8.gr7.us-east-1.eks.amazonaws.com
-      name: may30Cluster
+    - server: https://9B674EF0A0009BFCA1DB6574CAE9DC36.gr7.us-east-1.eks.amazonaws.com
+      name: '*'
       namespace: '*'
   clusterResourceWhitelist:
     - group: '*'

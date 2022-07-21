@@ -3,8 +3,12 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: may27
+  name: july19
   region: us-east-1
+  version: "1.22"
+
+iam:
+  withOIDC: true
 
 nodeGroups:
   - name: ng-1

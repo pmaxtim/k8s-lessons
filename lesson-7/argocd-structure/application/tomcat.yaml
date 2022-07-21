@@ -7,7 +7,7 @@ spec:
   destination:
     name: ''
     namespace: default
-    server: 'https://13ADA01E6286EDD91499DFD7C36443E8.gr7.us-east-1.eks.amazonaws.com'
+    server: 'https://9B674EF0A0009BFCA1DB6574CAE9DC36.gr7.us-east-1.eks.amazonaws.com'
   source:
     path: lesson-7/charts/tomcat
     repoURL: 'git@github.com:imprivata-mtimoshchenko/k8s-lessons.git'

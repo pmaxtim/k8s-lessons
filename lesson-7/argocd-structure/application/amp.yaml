@@ -1,20 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx
+  name: amp
   namespace: argocd
 spec:
   destination:
-    name: ''
-    namespace: default
     server: 'https://9B674EF0A0009BFCA1DB6574CAE9DC36.gr7.us-east-1.eks.amazonaws.com'
+    namespace: prometheus
   source:
-    path: lesson-7/charts/nginx
-    repoURL: 'git@github.com:imprivata-mtimoshchenko/k8s-lessons.git'
-    targetRevision: HEAD
+    chart: prometheus
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 15.10.5
     helm:
-      valueFiles:
-        - values.yaml
+      releaseName: amp
   project: mtim-lesson-7
   syncPolicy:
     automated:
