@@ -26,7 +26,7 @@ serviceAccounts:
     create: true
     name: "amp-iamproxy-ingest-service-account"
     annotations: {
-      eks.amazonaws.com/role-arn: "{AMP_IAMPROXY_INGEST_ROLE_ARN}"
+      eks.amazonaws.com/role-arn: "arn:aws:iam::950313701701:role/amp-iamproxy-ingest-role"
     }
 
 alertmanager:
@@ -755,9 +755,9 @@ server:
   ## https://prometheus.io/docs/prometheus/latest/configuration/configuration/#remote_write
   ##
   remoteWrite:
-    - url: {AMP_REMOTE_WRITE_URL}
+    - url: https://aps-workspaces.us-east-1.amazonaws.com/workspaces/ws-48d66447-c7fe-476f-872b-67651bd527c7/api/v1/remote_write
       sigv4:
-        region: {AWS_REGION}
+        region: us-east-1
       queue_config:
         max_samples_per_send: 1000
         max_shards: 200
