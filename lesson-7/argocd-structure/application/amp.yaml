@@ -1,18 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: amp
+  name: prometheus
   namespace: argocd
 spec:
   destination:
-    server: 'https://9B674EF0A0009BFCA1DB6574CAE9DC36.gr7.us-east-1.eks.amazonaws.com'
+    name: ''
     namespace: prometheus
+    server: 'https://9B674EF0A0009BFCA1DB6574CAE9DC36.gr7.us-east-1.eks.amazonaws.com'
   source:
-    chart: prometheus
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 15.10.5
+    path: lesson-7/charts/prometheus
+    repoURL: 'git@github.com:imprivata-mtimoshchenko/k8s-lessons.git'
+    targetRevision: HEAD
     helm:
-      releaseName: amp
+      valueFiles:
+        - values.yaml
   project: mtim-lesson-7
   syncPolicy:
     automated:

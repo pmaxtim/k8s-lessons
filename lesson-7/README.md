@@ -2,6 +2,7 @@
 - [x] Deploy this scheme using ArgoCD
 - [x] Check how it works with manual creation of ArgoCD Applications
 - [x] Check how creation of ArgoCD Applications works with argoCLI
+- [x] Integrate Prometheus for Amazon Managed Prometheus (AMP) + Amazon Managed Grafana (AMG)
 
 ---
 ### Scheme:
@@ -108,7 +109,7 @@ argocd cluster add {CLUSTER_CONTEXT_ARN}
 ```
 
 9.  [MANUAL FROM UI] Create an Application in ArgoCD from Git repo
-
+see bellow for CLI
 **Pre-settings**
 - Create Repository: ArgoCD UI -> Settings -> Repositories ->
   Connect repo using SSH -> Enter parameters -> Save as credentials template.
@@ -131,7 +132,7 @@ Create external-dns application: ArgoCD UI -> New App -> Enter parameters:
 
 -> Create
 
-10. [FROM CLI] Create an Application in ArgoCD from Git repo
+9. [FROM CLI] Create an Application in ArgoCD from Git repo
 
 
 **Pre-settings**
@@ -156,6 +157,10 @@ kubectl apply -f argocd-structure/application/nginx.yaml
 kubectl apply -f argocd-structure/application/tomcat.yaml
 ```
 
+10. Create AMP
+11. Create IAM roles
+12. Create prometeus
+13. Create AMG
 
 ### Delete cluster after tests
 Run from lesson-7 dir
